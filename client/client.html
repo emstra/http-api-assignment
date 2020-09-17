@@ -2,11 +2,61 @@
 <html lang="en">
 <head>
   <title>Our simple HTTP server</title>
-  <link rel="stylesheet" type="text/css" href="/style.css">
+  <link rel="stylesheet" type="text/css" href="style.css">
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
   <script type="text/babel">
 
+
+  const handleResponse =(xhr)=>{
+    const type = xhr.getResponseHeader("content-type");
+    let title = '???';
+    let message = '???';
+
+    if(type === 'application/json')
+    {
+      const obj = JSON.parse(xhr.response);
+      title = obj.title;
+      message = obj.message;
+    }
+    else if(type === 'text/xml')
+    {
+      title = xhr.responseXML.querySelector("title").textContent;
+      message = xhr.responseXML.querySelector("message").textContent;
+    }
+
+    document.querySelector("#content").innerHTML = `
+			<hr>
+			<h1>${title}</h1>
+			<p>Message : ${message}</p>
+			`;
+  };
+
+
+  // send ajax function
+  const sendAjax =(url, acceptedType)=>{
+    const xhr = new XMLHttpRequest();
+
+    xhr.open('GET', url); // open request to get URL
+    xhr.setRequestHeader('Accept', acceptedType); // set the accepted type of response
+
+    xhr.onload = () =>handleResponse(xhr); // create an event to react to the response
+
+    xhr.send(); // send request
+    console.log(`sending ${url}`);
+  };
+
+
+  // init function to set up buttons/ event listeners
+  const init = () =>{
+    const sendButton = document.querySelector('#send');
+    const targetUrl = document.querySelector('#page');
+    const type = document.querySelector('#type');
+
+    sendButton.onclick =()=> sendAjax(targetUrl.value, type.value)
+  }
+
+  window.onload = init;
   </script>
 </head>
 <body>

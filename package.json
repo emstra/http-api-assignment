@@ -1,0 +1,29 @@
+{
+  "name": "http-api-assignment",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./src/server.js",
+    "pretest": "eslint ./src --fix",
+    "test": "echo \"Tests Complete\" "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emstra/http-api-assignment.git"
+  },
+  "keywords": [
+    "430"
+  ],
+  "author": "EliStraut",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/emstra/http-api-assignment/issues"
+  },
+  "homepage": "https://github.com/emstra/http-api-assignment#readme",
+  "devDependencies": {
+    "eslint": "^7.9.0",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-plugin-import": "^2.22.0"
+  }
+}
